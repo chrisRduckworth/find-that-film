@@ -21,14 +21,14 @@ function Search({ genres, setSearchResults, setChosen, setFinalCriteria }) {
         const chosenGenre = genres.find(
           (genre) => genre.id === parseInt(genreSelect)
         );
-        setChosen({ genre: chosenGenre.name });
+        setChosen({ genre: chosenGenre });
       }
     } else {
       if (searchText === "") {
         setIsInvalid(true);
       } else {
         const people = await getPeople(searchText)
-        setSearchResults(people)
+        setSearchResults({people, category})
       }
     }
   }
@@ -47,7 +47,7 @@ function Search({ genres, setSearchResults, setChosen, setFinalCriteria }) {
       {category === "genre" ? (
         <select
           value={genreSelect}
-          onChange={(e) => setGenreSelect(e.target.value)}
+          onChange={(e) => setGenreSelect(parseInt(e.target.value))}
           aria-label="genre-list"
         >
           <option value="">-- Select One --</option>

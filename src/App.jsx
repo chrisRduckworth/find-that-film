@@ -10,15 +10,39 @@ function App() {
     directors: [],
     genres: [],
   });
+  const [searchCards, setSearchCards] = useState([0]);
+
+  function addAnother() {
+    setSearchCards((curr) => {
+      const newId = Math.max(...curr) + 1
+      return [...curr, newId]
+    })
+  }
+
   useEffect(() => {
-    getGenres().then((genres) => setGenres(genres));
+    async function fetchGenres() {
+      const genres = await getGenres()
+      setGenres(genres)
+    }
+    fetchGenres()
   }, []);
 
   return (
     <main>
       <p>testing</p>
-      <SearchCard genres={genres} setFinalCriteria={setFinalCriteria} />
-      <button>+ add another</button>
+      {searchCards.map((id) => {
+        return (
+          <section key={id}>
+            <SearchCard
+              genres={genres}
+              setFinalCriteria={setFinalCriteria}
+              id={id}
+              setSearchCards={setSearchCards}
+            />
+          </section>
+        );
+      })}
+      <button onClick={addAnother}>+ add another</button>
     </main>
   );
 }
