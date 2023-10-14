@@ -6,8 +6,11 @@ function Search({ genres, setSearchResults, setChosen, setFinalCriteria }) {
   const [searchText, setSearchText] = useState("");
   const [genreSelect, setGenreSelect] = useState("");
   const [isInvalid, setIsInvalid] = useState(false);
+  const [searchError, setSearchError] = useState(false)
 
   async function handleSearch(event) {
+    setSearchError(false)
+    setIsInvalid(false)
     event.preventDefault();
     if (category === "genre") {
       if (genreSelect === "") {
@@ -27,8 +30,12 @@ function Search({ genres, setSearchResults, setChosen, setFinalCriteria }) {
       if (searchText === "") {
         setIsInvalid(true);
       } else {
-        const people = await getPeople(searchText)
-        setSearchResults({people, category})
+        try {
+          const people = await getPeople(searchText)
+          setSearchResults({people, category})
+        } catch {
+          setSearchError(true)
+        }
       }
     }
   }
@@ -69,6 +76,7 @@ function Search({ genres, setSearchResults, setChosen, setFinalCriteria }) {
       )}
       <button onClick={handleSearch}>Submit</button>
       {isInvalid && <p>Invalid input</p>}
+      {searchError && <p>Error searching</p>}
     </form>
   );
 }

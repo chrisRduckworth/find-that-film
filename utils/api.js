@@ -5,23 +5,15 @@ const api = axios.create({
 });
 
 export async function getGenres() {
-  try {
-    const {
-      data: { genres },
-    } = await api.get("/genres");
-    return genres;
-  } catch (err) {
-    console.log(err);
-  }
+  const {
+    data: { genres },
+  } = await api.get("/genres");
+  return genres;
 }
 
 export async function getPeople(name) {
-  try {
-    const {
-      data: { people },
-    } = await api.get(`/people?name=${name}`);
-    return people;
-  } catch (err) {
-    console.log(err);
-  }
+  const {
+    data: { people },
+  } = await api.get(`/people?name=${name}`);
+  return people;
 }
