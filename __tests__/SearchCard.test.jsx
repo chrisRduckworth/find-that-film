@@ -1,10 +1,12 @@
 import Search from "../src/SearchCard/Search";
-import { render, fireEvent, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
+import { server } from "./mocks/server";
+import { rest } from "msw";
 import userEvent from "@testing-library/user-event";
 import { genres } from "./data/index.js";
-import SearchCard from "../src/SearchCard/SearchCard";
 import App from "../src/App";
+import { submitSearch, submitGenre, submitSearchAndChoose } from "./setupFunctions";
 
 describe("SearchCard", () => {
   describe("Search", () => {
@@ -58,18 +60,6 @@ describe("SearchCard", () => {
     });
   });
   describe("Results", () => {
-    async function submitSearch() {
-      function setFinalCriteria() {}
-      const user = userEvent.setup();
-      render(
-        <SearchCard genres={genres} setFinalCriteria={setFinalCriteria} />
-      );
-      const search = screen.getByPlaceholderText("Search...");
-      const submit = screen.getByText("Submit");
-
-      await user.type(search, "clooney");
-      await user.pointer({ keys: "[MouseLeft]", target: submit });
-    }
     it("after submitting (if category is not genre), should not display categories, search, or submit", async () => {
       await submitSearch();
 
@@ -105,20 +95,6 @@ describe("SearchCard", () => {
   });
   describe("Chosen", () => {
     describe("genre", () => {
-      async function submitGenre() {
-        function setFinalCriteria() {}
-        const user = userEvent.setup();
-        render(
-          <SearchCard genres={genres} setFinalCriteria={setFinalCriteria} />
-        );
-        const select = screen.getByRole("combobox", { name: "category" });
-        await user.selectOptions(select, "genre");
-        const genreList = screen.getByRole("combobox", { name: "genre-list" });
-        await user.selectOptions(genreList, "Action");
-        const submit = screen.getByText("Submit");
-
-        await user.pointer({ keys: "[MouseLeft]", target: submit });
-      }
       it("should display chosen genre after submitting", async () => {
         await submitGenre();
 
@@ -148,41 +124,26 @@ describe("SearchCard", () => {
       });
     });
     describe("person", () => {
-      async function submitSearch() {
-        function setFinalCriteria() {}
-        const user = userEvent.setup();
-        render(
-          <SearchCard genres={genres} setFinalCriteria={setFinalCriteria} />
-        );
-        const search = screen.getByPlaceholderText("Search...");
-        const submit = screen.getByText("Submit");
-
-        await user.type(search, "clooney");
-        await user.pointer({ keys: "[MouseLeft]", target: submit });
-
-        const george = screen.getAllByRole("listitem")[0];
-        await user.pointer({ keys: "[MouseLeft]", target: george });
-      }
       it("should display the chosen person if they are selected", async () => {
-        await submitSearch();
+        await submitSearchAndChoose();
 
         expect(screen.queryByText("George Clooney")).toBeVisible();
         expect(screen.queryByAltText("George Clooney portrait")).toBeVisible();
       });
       it("should hide person list after selecting one person", async () => {
-        await submitSearch();
+        await submitSearchAndChoose();
 
         expect(screen.queryByRole("list")).toBeNull();
       });
       it("should hide try again button and show delete button once submitting a person", async () => {
-        await submitSearch();
+        await submitSearchAndChoose();
 
         expect(screen.queryByText("Try again")).toBeNull();
         expect(screen.queryByText("del")).toBeVisible();
       });
       it("should take you back to results if you press choose another", async () => {
         const user = userEvent.setup();
-        await submitSearch();
+        await submitSearchAndChoose();
 
         const change = screen.getByText("Change selection");
         await user.pointer({ keys: "[MouseLeft]", target: change });
@@ -218,7 +179,53 @@ describe("SearchCard", () => {
 
     expect(screen.queryAllByPlaceholderText("Search...")).toHaveLength(2);
   });
+  describe("Errors", () => {
+    it("should display error if fails to find genres", async () => {
+      server.use(
+        rest.get("http://localhost:9090/api/genres", (req, res, ctx) => {
+          return res(ctx.status(500), ctx.json({ msg: "Error" }));
+        })
+      );
+      render(<App />);
+
+      expect(await screen.findByText("Retry")).toBeVisible();
+      expect(await screen.findByText("Error finding genres")).toBeVisible();
+    });
+    it("should resend the get genres request if retry is pressed", async () => {
+      let callCount = 0;
+      server.use(
+        rest.get("http://localhost:9090/api/genres", (req, res, ctx) => {
+          callCount++;
+          return res(ctx.status(500), ctx.json({ msg: "Error" }));
+        })
+      );
+      const user = userEvent.setup();
+      render(<App />);
+      const retry = await screen.findByText("Retry");
+
+      await user.pointer({ keys: "[MouseLeft]", target: retry });
+
+      expect(callCount).toBe(2);
+    });
+    it("should display error get request fails", async () => {
+      server.use(
+        rest.get("http://localhost:9090/api/people", (req,res,ctx) => {
+          return res(ctx.status(500), ctx.json({msg: "Error"}))
+        })
+      )
+      await submitSearch()
+
+      expect(screen.queryByText("Error searching")).toBeVisible()
+    });
+    it('should display "no results found" if no people are returned', async () => {
+      server.use(
+        rest.get("http://localhost:9090/api/people", (req,res,ctx) => {
+          return res(ctx.status(200), ctx.json({people: []}))
+        })
+      )
+      await submitSearch()
+
+      expect(screen.queryByText("No results")).toBeVisible()
+    });
+  });
 });
-// error handling: genres, people
-// no people found
-// consitent use of get for set up and query for tests
