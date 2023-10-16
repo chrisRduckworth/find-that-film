@@ -5,8 +5,8 @@ import { server } from "./mocks/server";
 import { rest } from "msw";
 import userEvent from "@testing-library/user-event";
 import { genres } from "./data/index.js";
-import App from "../src/App";
 import { submitSearch, submitGenre, submitSearchAndChoose } from "./setupFunctions";
+import FindFilms from "../src/FindFilms";
 
 describe("SearchCard", () => {
   describe("Search", () => {
@@ -108,7 +108,7 @@ describe("SearchCard", () => {
       });
       it("should remove chosen genre when delete button is pressed", async () => {
         const user = userEvent.setup();
-        render(<App />);
+        render(<FindFilms />);
         const select = screen.getByRole("combobox", { name: "category" });
         await user.selectOptions(select, "genre");
         const genreList = screen.getByRole("combobox", { name: "genre-list" });
@@ -153,7 +153,7 @@ describe("SearchCard", () => {
       });
       it("should remove chosen person when delete button is pressed", async () => {
         const user = userEvent.setup();
-        render(<App />);
+        render(<FindFilms />);
         const search = screen.getByPlaceholderText("Search...");
         const submit = screen.getByText("Submit");
         await user.type(search, "clooney");
@@ -172,7 +172,7 @@ describe("SearchCard", () => {
   });
   it("should add another search card when button is pressed", async () => {
     const user = userEvent.setup();
-    render(<App />);
+    render(<FindFilms />);
     const addAnother = screen.getByText("+ add another");
 
     await user.pointer({ keys: "[MouseLeft]", target: addAnother });
@@ -186,7 +186,7 @@ describe("SearchCard", () => {
           return res(ctx.status(500), ctx.json({ msg: "Error" }));
         })
       );
-      render(<App />);
+      render(<FindFilms />);
 
       expect(await screen.findByText("Retry")).toBeVisible();
       expect(await screen.findByText("Error finding genres")).toBeVisible();
@@ -200,7 +200,7 @@ describe("SearchCard", () => {
         })
       );
       const user = userEvent.setup();
-      render(<App />);
+      render(<FindFilms />);
       const retry = await screen.findByText("Retry");
 
       await user.pointer({ keys: "[MouseLeft]", target: retry });

@@ -2,7 +2,7 @@ import userEvent from "@testing-library/user-event";
 import { render, screen } from "@testing-library/react";
 import SearchCard from "../src/SearchCard/SearchCard";
 import { genres } from "./data/index.js";
-import App from "../src/App";
+import FindFilms from "../src/FindFilms";
 
 export async function submitSearch() {
   function setFinalCriteria() {}
@@ -44,7 +44,7 @@ export async function submitSearchAndChoose() {
 
 export async function findFilms() {
   const user = userEvent.setup();
-  render(<App />);
+  render(<FindFilms />);
   // add george clooney to the list
   const search = screen.getByPlaceholderText("Search...");
   const submit = screen.getByText("Submit");
