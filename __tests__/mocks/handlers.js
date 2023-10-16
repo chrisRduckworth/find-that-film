@@ -1,12 +1,16 @@
 import { rest } from "msw";
-import { genres, people } from "../data/index.js";
+import { genres, people, matches } from "../data/index.js";
 
 export const handlers = [
-  rest.get("http://localhost:9090/api/genres", (req, res, ctx) => {
+  rest.get("https://find-that-film-backend.adaptable.app/api/genres", (req, res, ctx) => {
     return res(ctx.status(200), ctx.json({ genres }));
   }),
 
-  rest.get("http://localhost:9090/api/people", (req, res, ctx) => {
+  rest.get("https://find-that-film-backend.adaptable.app/api/people", (req, res, ctx) => {
     return res(ctx.status(200), ctx.json({ people }));
+  }),
+
+  rest.get("https://find-that-film-backend.adaptable.app/api/films", (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json({ films: matches }));
   }),
 ];
