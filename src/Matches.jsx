@@ -1,4 +1,8 @@
 function Matches({ matches }) {
+  if (matches.length === 0) {
+    return <p>No films found</p>;
+  }
+
   return (
     <ol>
       {matches.map((match) => {
