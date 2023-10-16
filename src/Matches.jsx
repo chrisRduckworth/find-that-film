@@ -14,6 +14,9 @@ function Matches({ matches }) {
               alt={`${match.title} poster`}
               style={{ height: "100px" }}
             />
+            <a href={`https://www.themoviedb.org/movie/${match.id}`} target="_blank">
+              More info
+            </a>
           </li>
         );
       })}
