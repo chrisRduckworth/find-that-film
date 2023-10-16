@@ -182,7 +182,7 @@ describe("SearchCard", () => {
   describe("Errors", () => {
     it("should display error if fails to find genres", async () => {
       server.use(
-        rest.get("http://localhost:9090/api/genres", (req, res, ctx) => {
+        rest.get("https://find-that-film-backend.adaptable.app/api/genres", (req, res, ctx) => {
           return res(ctx.status(500), ctx.json({ msg: "Error" }));
         })
       );
@@ -194,7 +194,7 @@ describe("SearchCard", () => {
     it("should resend the get genres request if retry is pressed", async () => {
       let callCount = 0;
       server.use(
-        rest.get("http://localhost:9090/api/genres", (req, res, ctx) => {
+        rest.get("https://find-that-film-backend.adaptable.app/api/genres", (req, res, ctx) => {
           callCount++;
           return res(ctx.status(500), ctx.json({ msg: "Error" }));
         })
@@ -209,7 +209,7 @@ describe("SearchCard", () => {
     });
     it("should display error get request fails", async () => {
       server.use(
-        rest.get("http://localhost:9090/api/people", (req,res,ctx) => {
+        rest.get("https://find-that-film-backend.adaptable.app/api/people", (req,res,ctx) => {
           return res(ctx.status(500), ctx.json({msg: "Error"}))
         })
       )
@@ -219,7 +219,7 @@ describe("SearchCard", () => {
     });
     it('should display "no results found" if no people are returned', async () => {
       server.use(
-        rest.get("http://localhost:9090/api/people", (req,res,ctx) => {
+        rest.get("https://find-that-film-backend.adaptable.app/api/people", (req,res,ctx) => {
           return res(ctx.status(200), ctx.json({people: []}))
         })
       )
