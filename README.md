@@ -1,8 +1,7 @@
-# React + Vite
+# Find That Film
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[Find That Film](https://find-that-film.netlify.app/) is a React app that helps you when you can't remember the name of a film, but can remember who's in it.
 
-Currently, two official plugins are available:
+This was my first project using the [React testing library](https://testing-library.com/docs/react-testing-library/intro), which was a steep learning curve but made the process much smoother.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This product uses the TMDB API but is not endorsed or certified by TMDB
