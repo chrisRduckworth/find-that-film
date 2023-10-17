@@ -1,8 +1,13 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { getFilms, getGenres } from "../utils/api";
+import { Link } from "react-router-dom";
+import Button from "react-bootstrap/Button";
+import Stack from "react-bootstrap/Stack";
 import SearchCard from "./SearchCard/SearchCard";
 import Matches from "./Matches";
+import "./FindFilms.css";
+import "./App.css"
 
 function FindFilms() {
   const [genres, setGenres] = useState([]);
@@ -15,12 +20,13 @@ function FindFilms() {
   const [genreError, setGenreError] = useState(false);
   const [matches, setMatches] = useState(undefined);
   const [filmError, setFilmError] = useState(false);
-  console.log(searchCards)
+
   function addAnother() {
     setSearchCards((curr) => [...curr, Date.now()]);
   }
 
   function handleRestart() {
+    window.scrollTo(0,0)
     setSearchCards([0]);
     setMatches(undefined);
     setFinalCriteria({
@@ -51,16 +57,19 @@ function FindFilms() {
   }
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     fetchGenres();
   }, []);
 
   return (
     <main>
       {matches ? (
-        <>
+        <Stack className="align-items-center">
           <Matches matches={matches} />
-          <button onClick={handleRestart}>Start Again</button>
-        </>
+          <Button className="startAgain" onClick={handleRestart}>
+            Start Again
+          </Button>
+        </Stack>
       ) : (
         <>
           {searchCards.map((id) => {
@@ -87,10 +96,17 @@ function FindFilms() {
               <button onClick={findMatches}>Retry</button>
             </>
           )}
-          <button onClick={addAnother}>+ add another</button>
-          <button onClick={findMatches}>Find films</button>
+          <Stack className="align-items-center findFilmsButtons" gap={3}>
+            <Button onClick={addAnother}>Add Another</Button>
+            <Button onClick={findMatches}>Find films</Button>
+          </Stack>
         </>
       )}
+      <div className="aboutLinkContainer">
+        <Link to="/about" className="aboutLink">
+          About
+        </Link>
+      </div>
     </main>
   );
 }

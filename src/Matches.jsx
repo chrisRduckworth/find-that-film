@@ -1,26 +1,38 @@
+import ListGroup from "react-bootstrap/ListGroup";
+import Stack from "react-bootstrap/Stack";
+import "./Matches.css";
+
 function Matches({ matches }) {
   if (matches.length === 0) {
-    return <p>No films found</p>;
+    return <p className="text-center">No films found</p>;
   }
 
   return (
-    <ol>
+    <ListGroup className="filmResults">
       {matches.map((match) => {
         return (
-          <li key={match.id}>
-            <h3>{`${match.title} (${match.year})`}</h3>
-            <img
-              src={match.poster}
-              alt={`${match.title} poster`}
-              style={{ height: "100px" }}
-            />
-            <a href={`https://www.themoviedb.org/movie/${match.id}`} target="_blank">
-              More info
-            </a>
-          </li>
+          <ListGroup.Item key={match.id} className="filmCard">
+            <Stack direction="horizontal">
+              <Stack className="justify-content-around">
+                <h3>{`${match.title} (${match.year})`}</h3>
+                <a
+                  href={`https://www.themoviedb.org/movie/${match.id}`}
+                  target="_blank"
+                  className="tmdbLink"
+                >
+                  TMDB link
+                </a>
+              </Stack>
+              <img
+                src={match.poster}
+                alt={`${match.title} poster`}
+                style={{ height: "100px" }}
+              />
+            </Stack>
+          </ListGroup.Item>
         );
       })}
-    </ol>
+    </ListGroup>
   );
 }
 

@@ -1,0 +1,13 @@
+.about {
+  margin: 0.5em 1em 1em;
+}
+
+.about img {
+  width: 10em;
+  margin: 0.5em;
+}
+
+.tmdbLogo {
+  display: flex;
+  justify-content: center;
+}
