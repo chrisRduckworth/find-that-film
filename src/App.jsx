@@ -2,6 +2,7 @@ import { Link, Route, Routes } from "react-router-dom";
 import FindFilms from "./FindFilms";
 import About from "./About";
 import "./App.css";
+import "./Colors.css"
 
 function App() {
   return (
