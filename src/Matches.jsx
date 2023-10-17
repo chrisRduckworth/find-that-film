@@ -18,6 +18,7 @@ function Matches({ matches }) {
                 <a
                   href={`https://www.themoviedb.org/movie/${match.id}`}
                   target="_blank"
+                  className="tmdbLink"
                 >
                   TMDB link
                 </a>

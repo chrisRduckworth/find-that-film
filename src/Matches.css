@@ -3,3 +3,7 @@
   max-height: 72vh;
   margin: 0 1em 1em;
 }
+
+.tmdbLink {
+  width: max-content;
+}
