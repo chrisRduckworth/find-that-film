@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
 import SearchCard from "./SearchCard/SearchCard";
 import Matches from "./Matches";
-import "./FindFilms.css"
+import "./FindFilms.css";
 
 function FindFilms() {
   const [genres, setGenres] = useState([]);
@@ -54,6 +54,7 @@ function FindFilms() {
   }
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     fetchGenres();
   }, []);
 
@@ -62,7 +63,9 @@ function FindFilms() {
       {matches ? (
         <Stack className="align-items-center">
           <Matches matches={matches} />
-          <Button className="startAgain" onClick={handleRestart}>Start Again</Button>
+          <Button className="startAgain" onClick={handleRestart}>
+            Start Again
+          </Button>
         </Stack>
       ) : (
         <>
