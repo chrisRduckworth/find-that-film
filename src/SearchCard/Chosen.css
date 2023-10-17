@@ -1,0 +1,22 @@
+.chosenPersonCard {
+  border: 2px solid #e9ecef;
+  border-radius: 5px/5px;
+  padding: 0.5rem 1rem;
+  margin: 0 1rem 1rem;
+}
+
+.delButton {
+  margin-right: 1em;
+}
+
+.chosenType {
+  margin: 1rem 0 1rem calc(2rem + 2px);
+  text-decoration:underline
+}
+
+.chosenGenre {
+  border: 2px solid #e9ecef;
+  border-radius: 5px/5px;
+  padding: 0.5rem 1rem;
+  margin: 0 1rem 1rem;
+}
