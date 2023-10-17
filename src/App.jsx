@@ -13,11 +13,6 @@ function App() {
         <Route path="/" element={<FindFilms />} />
         <Route path="/about" element={<About />} />
       </Routes>
-      <div className="aboutLinkContainer">
-        <Link to="/about" className="aboutLink">
-          About
-        </Link>
-      </div>
     </>
   );
 }

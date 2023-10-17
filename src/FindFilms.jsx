@@ -1,11 +1,13 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { getFilms, getGenres } from "../utils/api";
+import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
 import SearchCard from "./SearchCard/SearchCard";
 import Matches from "./Matches";
 import "./FindFilms.css";
+import "./App.css"
 
 function FindFilms() {
   const [genres, setGenres] = useState([]);
@@ -99,6 +101,11 @@ function FindFilms() {
           </Stack>
         </>
       )}
+      <div className="aboutLinkContainer">
+        <Link to="/about" className="aboutLink">
+          About
+        </Link>
+      </div>
     </main>
   );
 }
