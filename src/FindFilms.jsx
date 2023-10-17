@@ -7,7 +7,8 @@ import Stack from "react-bootstrap/Stack";
 import SearchCard from "./SearchCard/SearchCard";
 import Matches from "./Matches";
 import "./FindFilms.css";
-import "./App.css"
+import "./App.css";
+import Spinner from "react-bootstrap/Spinner";
 
 function FindFilms() {
   const [genres, setGenres] = useState([]);
@@ -20,13 +21,14 @@ function FindFilms() {
   const [genreError, setGenreError] = useState(false);
   const [matches, setMatches] = useState(undefined);
   const [filmError, setFilmError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   function addAnother() {
     setSearchCards((curr) => [...curr, Date.now()]);
   }
 
   function handleRestart() {
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0);
     setSearchCards([0]);
     setMatches(undefined);
     setFinalCriteria({
@@ -48,12 +50,14 @@ function FindFilms() {
 
   async function findMatches() {
     setFilmError(false);
+    setIsLoading(true);
     try {
       const films = await getFilms(finalCriteria);
       setMatches(films);
     } catch {
       setFilmError(true);
     }
+    setIsLoading(false);
   }
 
   useEffect(() => {
@@ -97,8 +101,15 @@ function FindFilms() {
             </>
           )}
           <Stack className="align-items-center findFilmsButtons" gap={3}>
-            <Button onClick={addAnother}>Add Another</Button>
-            <Button onClick={findMatches}>Find films</Button>
+            <Button onClick={addAnother}>Add another</Button>
+            <Button onClick={findMatches} disabled={isLoading}>
+              Find films
+            </Button>
+            {isLoading && (
+              <Spinner role="status">
+                <span className="visually-hidden">Loading...</span>
+              </Spinner>
+            )}
           </Stack>
         </>
       )}
