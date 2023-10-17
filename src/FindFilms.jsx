@@ -26,6 +26,7 @@ function FindFilms() {
   }
 
   function handleRestart() {
+    window.scrollTo(0,0)
     setSearchCards([0]);
     setMatches(undefined);
     setFinalCriteria({
