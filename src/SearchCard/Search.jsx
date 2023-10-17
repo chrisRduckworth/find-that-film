@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
 import Badge from "react-bootstrap/Badge";
-import InputGroup from "react-bootstrap/InputGroup"
+import InputGroup from "react-bootstrap/InputGroup";
 import "./Search.css";
 
 function Search({ genres, setSearchResults, setChosen, setFinalCriteria }) {
@@ -88,7 +88,7 @@ function Search({ genres, setSearchResults, setChosen, setFinalCriteria }) {
             />
           )}
           <Button type="submit">Submit</Button>
-          </InputGroup>
+        </InputGroup>
       </Stack>
     </Form>
   );

@@ -1,3 +1,8 @@
+import ListGroup from "react-bootstrap/ListGroup";
+import Button from "react-bootstrap/Button";
+import Stack from "react-bootstrap/Stack";
+import "./Results.css";
+
 function Results({
   searchResults,
   setChosen,
@@ -19,26 +24,43 @@ function Results({
 
   return (
     <>
+      <h3 className="resultsHeader">Select one:</h3>
       {searchResults.people.length === 0 ? (
         <p>No results</p>
       ) : (
-        <ol>
+        <ListGroup className="personResults">
           {searchResults.people.map((person) => {
             return (
-              <li key={person.id} onClick={(e) => handleClick(person)}>
-                <h3>{person.name}</h3>
-                <p>{`${person.knownFor.title} (${person.knownFor.year})`}</p>
-                <img
-                  src={person.img}
-                  alt={`${person.name} portrait`}
-                  style={{ height: "100px" }}
-                />
-              </li>
+              <ListGroup.Item
+                key={person.id}
+                onClick={(e) => handleClick(person)}
+                action
+                variant="light"
+              >
+                <Stack direction="horizontal">
+                  <Stack className="justify-content-between">
+                    <h3>{person.name}</h3>
+                    <p>{`${person.knownFor.title} (${person.knownFor.year})`}</p>
+                  </Stack>
+                  <img
+                    src={person.img}
+                    alt={`${person.name} portrait`}
+                    style={{ height: "100px" }}
+                  />
+                </Stack>
+              </ListGroup.Item>
             );
           })}
-        </ol>
+        </ListGroup>
       )}
-      <button onClick={() => setSearchResults(undefined)}>Try again</button>
+      <Stack direction="horizontal" gap={1} className="justify-content-center">
+        <Button
+          onClick={() => setSearchResults(undefined)}
+          className="tryAgain"
+        >
+          Try again
+        </Button>
+      </Stack>
     </>
   );
 }
