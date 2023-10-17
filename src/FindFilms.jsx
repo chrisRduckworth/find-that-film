@@ -60,10 +60,10 @@ function FindFilms() {
   return (
     <main>
       {matches ? (
-        <>
+        <Stack className="align-items-center">
           <Matches matches={matches} />
-          <button onClick={handleRestart}>Start Again</button>
-        </>
+          <Button className="startAgain" onClick={handleRestart}>Start Again</Button>
+        </Stack>
       ) : (
         <>
           {searchCards.map((id) => {

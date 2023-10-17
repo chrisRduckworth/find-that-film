@@ -1,4 +1,8 @@
 .findFilmsButtons {
   margin: 1em 0;
-  /* width: max-content; */
+}
+
+.startAgain {
+  width: max-content;
+  margin: 1em;
 }
