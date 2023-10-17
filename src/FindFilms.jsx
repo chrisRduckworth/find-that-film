@@ -11,16 +11,13 @@ function FindFilms() {
     directors: [],
     genres: [],
   });
-  const [searchCards, setSearchCards] = useState([0]);
+  const [searchCards, setSearchCards] = useState([Date.now()]);
   const [genreError, setGenreError] = useState(false);
   const [matches, setMatches] = useState(undefined);
   const [filmError, setFilmError] = useState(false);
-
+  console.log(searchCards)
   function addAnother() {
-    setSearchCards((curr) => {
-      const newId = Math.max(...curr) + 1;
-      return [...curr, newId];
-    });
+    setSearchCards((curr) => [...curr, Date.now()]);
   }
 
   function handleRestart() {
