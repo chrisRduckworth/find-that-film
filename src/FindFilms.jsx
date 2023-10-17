@@ -95,7 +95,7 @@ function FindFilms() {
               <button onClick={findMatches}>Retry</button>
             </>
           )}
-          <Stack className="align-items-center findFilmsButtons" gap={4}>
+          <Stack className="align-items-center findFilmsButtons" gap={3}>
             <Button onClick={addAnother}>Add Another</Button>
             <Button onClick={findMatches}>Find films</Button>
           </Stack>
