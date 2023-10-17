@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
 import Badge from "react-bootstrap/Badge";
+import InputGroup from "react-bootstrap/InputGroup"
 import "./Search.css";
 
 function Search({ genres, setSearchResults, setChosen, setFinalCriteria }) {
@@ -62,7 +63,7 @@ function Search({ genres, setSearchResults, setChosen, setFinalCriteria }) {
           {isInvalid && <Badge bg="danger">Invalid input</Badge>}
           {searchError && <Badge>Error searching</Badge>}
         </Stack>
-        <Stack direction="horizontal" gap={2}>
+        <InputGroup>
           {category === "genre" ? (
             <Form.Select
               value={genreSelect}
@@ -87,7 +88,7 @@ function Search({ genres, setSearchResults, setChosen, setFinalCriteria }) {
             />
           )}
           <Button type="submit">Submit</Button>
-        </Stack>
+          </InputGroup>
       </Stack>
     </Form>
   );

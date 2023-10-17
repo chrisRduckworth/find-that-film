@@ -15,7 +15,7 @@ function FindFilms() {
   const [genreError, setGenreError] = useState(false);
   const [matches, setMatches] = useState(undefined);
   const [filmError, setFilmError] = useState(false);
-  console.log(searchCards)
+
   function addAnother() {
     setSearchCards((curr) => [...curr, Date.now()]);
   }
