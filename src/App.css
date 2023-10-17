@@ -2,3 +2,24 @@ main {
   margin: auto;
   max-width: 800px;
 }
+
+header {
+  margin: 1em;
+  display: flex;
+  justify-content: center;
+}
+
+header > h1 {
+  border-bottom: 2px solid black;
+  padding: 0 2rem 1rem;
+  text-align: center;
+}
+
+.aboutLinkContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.aboutLink {
+  text-align: center;
+}

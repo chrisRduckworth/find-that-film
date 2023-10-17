@@ -57,6 +57,7 @@ function Results({
         <Button
           onClick={() => setSearchResults(undefined)}
           className="tryAgain"
+          variant="secondary"
         >
           Try again
         </Button>
