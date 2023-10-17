@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
 import Badge from "react-bootstrap/Badge";
 import InputGroup from "react-bootstrap/InputGroup";
+import Spinner from "react-bootstrap/Spinner";
 import "./Search.css";
 
 function Search({ genres, setSearchResults, setChosen, setFinalCriteria }) {
@@ -13,6 +14,7 @@ function Search({ genres, setSearchResults, setChosen, setFinalCriteria }) {
   const [genreSelect, setGenreSelect] = useState("");
   const [isInvalid, setIsInvalid] = useState(false);
   const [searchError, setSearchError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   async function handleSearch(event) {
     setSearchError(false);
@@ -36,12 +38,14 @@ function Search({ genres, setSearchResults, setChosen, setFinalCriteria }) {
       if (searchText === "") {
         setIsInvalid(true);
       } else {
+        setIsLoading(true);
         try {
           const people = await getPeople(searchText);
           setSearchResults({ people, category });
         } catch {
           setSearchError(true);
         }
+        setIsLoading(false);
       }
     }
   }
@@ -55,11 +59,17 @@ function Search({ genres, setSearchResults, setChosen, setFinalCriteria }) {
             onChange={(e) => setCategory(e.target.value)}
             aria-label="category"
             style={{ width: "max-content" }}
+            disabled={isLoading}
           >
             <option value="actor">Actor</option>
             <option value="director">Director</option>
             <option value="genre">Genre</option>
           </Form.Select>
+          {isLoading && (
+            <Spinner role="status">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          )}
           {isInvalid && <Badge bg="danger">Invalid input</Badge>}
           {searchError && <Badge>Error searching</Badge>}
         </Stack>
@@ -69,6 +79,7 @@ function Search({ genres, setSearchResults, setChosen, setFinalCriteria }) {
               value={genreSelect}
               onChange={(e) => setGenreSelect(parseInt(e.target.value))}
               aria-label="genre-list"
+              disabled={isLoading}
             >
               <option value="">-- Select One --</option>
               {genres.map((genre) => {
@@ -85,9 +96,12 @@ function Search({ genres, setSearchResults, setChosen, setFinalCriteria }) {
               placeholder="Search..."
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
+              disabled={isLoading}
             />
           )}
-          <Button type="submit">Submit</Button>
+          <Button type="submit" disabled={isLoading}>
+            Submit
+          </Button>
         </InputGroup>
       </Stack>
     </Form>
