@@ -1,8 +1,11 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { getFilms, getGenres } from "../utils/api";
+import Button from "react-bootstrap/Button";
+import Stack from "react-bootstrap/Stack";
 import SearchCard from "./SearchCard/SearchCard";
 import Matches from "./Matches";
+import "./FindFilms.css"
 
 function FindFilms() {
   const [genres, setGenres] = useState([]);
@@ -87,8 +90,10 @@ function FindFilms() {
               <button onClick={findMatches}>Retry</button>
             </>
           )}
-          <button onClick={addAnother}>+ add another</button>
-          <button onClick={findMatches}>Find films</button>
+          <Stack className="align-items-center findFilmsButtons" gap={5}>
+            <Button onClick={addAnother}>Add Another</Button>
+            <Button onClick={findMatches}>Find films</Button>
+          </Stack>
         </>
       )}
     </main>
