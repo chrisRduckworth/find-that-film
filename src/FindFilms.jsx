@@ -67,6 +67,24 @@ function FindFilms() {
 
   return (
     <main>
+      <section className="instructions">
+        <p>
+          To add an actor or director, select "Actor" or "Director" from the
+          dropdown. Then type in the name and click submit. Then{" "}
+          <strong>click one of the results.</strong>
+        </p>
+        <p>
+          To add a genre, select "Genre" from the dropdown menu. Then choose a
+          genre from the dropdown, and <strong>click Submit.</strong>
+        </p>
+        <p>
+          To add extra criteria, click Add Another. To remove a criteria you
+          have chosen, click Delete.
+        </p>
+        <p>
+          Click "Find Films" to find the films which match all your criteria!
+        </p>
+      </section>
       {matches ? (
         <Stack className="align-items-center">
           <Matches matches={matches} />
