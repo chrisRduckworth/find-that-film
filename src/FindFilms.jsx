@@ -86,12 +86,12 @@ function FindFilms() {
         </p>
       </section>
       {matches ? (
-        <Stack className="align-items-center">
+        <>
           <Matches matches={matches} />
           <Button className="startAgain" onClick={handleRestart}>
             Start Again
           </Button>
-        </Stack>
+        </>
       ) : (
         <>
           {searchCards.map((id) => {

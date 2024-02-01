@@ -11,7 +11,7 @@ function Matches({ matches }) {
     <ListGroup className="filmResults">
       {matches.map((match) => {
         return (
-          <ListGroup.Item key={match.id} className="filmCard">
+          <ListGroup.Item key={match.id}>
             <Stack direction="horizontal">
               <Stack className="justify-content-around">
                 <h3>{`${match.title} (${match.year})`}</h3>
