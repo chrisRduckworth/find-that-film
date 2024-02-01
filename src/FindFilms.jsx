@@ -88,9 +88,11 @@ function FindFilms() {
       {matches ? (
         <>
           <Matches matches={matches} />
-          <Button className="startAgain" onClick={handleRestart}>
-            Start Again
-          </Button>
+          <Stack>
+            <Button className="startAgain mx-auto" onClick={handleRestart}>
+              Start Again
+            </Button>
+          </Stack>
         </>
       ) : (
         <>
